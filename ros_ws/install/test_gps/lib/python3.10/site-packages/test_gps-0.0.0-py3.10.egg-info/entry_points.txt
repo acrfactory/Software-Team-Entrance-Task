@@ -1,0 +1,4 @@
+[console_scripts]
+check = test_gps.check:main
+test_gps = test_gps.test_gps:main
+

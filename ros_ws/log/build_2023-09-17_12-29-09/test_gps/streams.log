@@ -1,0 +1,27 @@
+[1.368s] Invoking command in '/home/ros/rosspaces/newboarding/Software-Team-Entrance-Task/ros_ws/src/testing/test_gps': CMAKE_PREFIX_PATH=/home/ros/rosspaces/newboarding/Software-Team-Entrance-Task/ros_ws/install/interfaces:/home/ros/rosspaces/newboarding/Software-Team-Entrance-Task/ros_ws/install/launch_test:/home/ros/rosspaces/newboarding/Software-Team-Entrance-Task/ros_ws/install/launch_nav PYTHONPATH=/home/ros/rosspaces/newboarding/Software-Team-Entrance-Task/ros_ws/build/test_gps/prefix_override:/home/ros/rosspaces/newboarding/Software-Team-Entrance-Task/ros_ws/install/test_gps/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../../../build/test_gps build --build-base /home/ros/rosspaces/newboarding/Software-Team-Entrance-Task/ros_ws/build/test_gps/build install --record /home/ros/rosspaces/newboarding/Software-Team-Entrance-Task/ros_ws/build/test_gps/install.log --single-version-externally-managed
+[1.627s] running egg_info
+[1.627s] writing ../../../build/test_gps/test_gps.egg-info/PKG-INFO
+[1.627s] writing dependency_links to ../../../build/test_gps/test_gps.egg-info/dependency_links.txt
+[1.627s] writing entry points to ../../../build/test_gps/test_gps.egg-info/entry_points.txt
+[1.627s] writing requirements to ../../../build/test_gps/test_gps.egg-info/requires.txt
+[1.627s] writing top-level names to ../../../build/test_gps/test_gps.egg-info/top_level.txt
+[1.628s] reading manifest file '../../../build/test_gps/test_gps.egg-info/SOURCES.txt'
+[1.629s] writing manifest file '../../../build/test_gps/test_gps.egg-info/SOURCES.txt'
+[1.629s] running build
+[1.629s] running build_py
+[1.629s] copying test_gps/check.py -> /home/ros/rosspaces/newboarding/Software-Team-Entrance-Task/ros_ws/build/test_gps/build/lib/test_gps
+[1.630s] running install
+[1.630s] /usr/lib/python3/dist-packages/setuptools/command/install.py:34: SetuptoolsDeprecationWarning: setup.py install is deprecated. Use build and pip and other standards-based tools.
+[1.630s]   warnings.warn(
+[1.630s] running install_lib
+[1.632s] copying /home/ros/rosspaces/newboarding/Software-Team-Entrance-Task/ros_ws/build/test_gps/build/lib/test_gps/check.py -> /home/ros/rosspaces/newboarding/Software-Team-Entrance-Task/ros_ws/install/test_gps/lib/python3.10/site-packages/test_gps
+[1.642s] byte-compiling /home/ros/rosspaces/newboarding/Software-Team-Entrance-Task/ros_ws/install/test_gps/lib/python3.10/site-packages/test_gps/check.py to check.cpython-310.pyc
+[1.642s] running install_data
+[1.646s] running install_egg_info
+[1.669s] removing '/home/ros/rosspaces/newboarding/Software-Team-Entrance-Task/ros_ws/install/test_gps/lib/python3.10/site-packages/test_gps-0.0.0-py3.10.egg-info' (and everything under it)
+[1.669s] Copying ../../../build/test_gps/test_gps.egg-info to /home/ros/rosspaces/newboarding/Software-Team-Entrance-Task/ros_ws/install/test_gps/lib/python3.10/site-packages/test_gps-0.0.0-py3.10.egg-info
+[1.669s] running install_scripts
+[1.697s] Installing check script to /home/ros/rosspaces/newboarding/Software-Team-Entrance-Task/ros_ws/install/test_gps/lib/test_gps
+[1.697s] Installing test_gps script to /home/ros/rosspaces/newboarding/Software-Team-Entrance-Task/ros_ws/install/test_gps/lib/test_gps
+[1.697s] writing list of installed files to '/home/ros/rosspaces/newboarding/Software-Team-Entrance-Task/ros_ws/build/test_gps/install.log'
+[1.705s] Invoked command in '/home/ros/rosspaces/newboarding/Software-Team-Entrance-Task/ros_ws/src/testing/test_gps' returned '0': CMAKE_PREFIX_PATH=/home/ros/rosspaces/newboarding/Software-Team-Entrance-Task/ros_ws/install/interfaces:/home/ros/rosspaces/newboarding/Software-Team-Entrance-Task/ros_ws/install/launch_test:/home/ros/rosspaces/newboarding/Software-Team-Entrance-Task/ros_ws/install/launch_nav PYTHONPATH=/home/ros/rosspaces/newboarding/Software-Team-Entrance-Task/ros_ws/build/test_gps/prefix_override:/home/ros/rosspaces/newboarding/Software-Team-Entrance-Task/ros_ws/install/test_gps/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../../../build/test_gps build --build-base /home/ros/rosspaces/newboarding/Software-Team-Entrance-Task/ros_ws/build/test_gps/build install --record /home/ros/rosspaces/newboarding/Software-Team-Entrance-Task/ros_ws/build/test_gps/install.log --single-version-externally-managed

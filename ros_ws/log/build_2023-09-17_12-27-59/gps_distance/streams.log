@@ -1,0 +1,23 @@
+[1.073s] Invoking command in '/home/ros/rosspaces/newboarding/Software-Team-Entrance-Task/ros_ws/src/Navigation/gps_distance': CMAKE_PREFIX_PATH=/home/ros/rosspaces/newboarding/Software-Team-Entrance-Task/ros_ws/install/interfaces:/home/ros/rosspaces/newboarding/Software-Team-Entrance-Task/ros_ws/install/launch_test:/home/ros/rosspaces/newboarding/Software-Team-Entrance-Task/ros_ws/install/launch_nav PYTHONPATH=/home/ros/rosspaces/newboarding/Software-Team-Entrance-Task/ros_ws/build/gps_distance/prefix_override:/home/ros/rosspaces/newboarding/Software-Team-Entrance-Task/ros_ws/install/gps_distance/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../../../build/gps_distance build --build-base /home/ros/rosspaces/newboarding/Software-Team-Entrance-Task/ros_ws/build/gps_distance/build install --record /home/ros/rosspaces/newboarding/Software-Team-Entrance-Task/ros_ws/build/gps_distance/install.log --single-version-externally-managed
+[1.332s] running egg_info
+[1.332s] writing ../../../build/gps_distance/gps_distance.egg-info/PKG-INFO
+[1.332s] writing dependency_links to ../../../build/gps_distance/gps_distance.egg-info/dependency_links.txt
+[1.333s] writing entry points to ../../../build/gps_distance/gps_distance.egg-info/entry_points.txt
+[1.333s] writing requirements to ../../../build/gps_distance/gps_distance.egg-info/requires.txt
+[1.336s] writing top-level names to ../../../build/gps_distance/gps_distance.egg-info/top_level.txt
+[1.356s] reading manifest file '../../../build/gps_distance/gps_distance.egg-info/SOURCES.txt'
+[1.357s] writing manifest file '../../../build/gps_distance/gps_distance.egg-info/SOURCES.txt'
+[1.357s] running build
+[1.357s] running build_py
+[1.357s] running install
+[1.357s] running install_lib
+[1.357s] running install_data
+[1.357s] running install_egg_info
+[1.357s] removing '/home/ros/rosspaces/newboarding/Software-Team-Entrance-Task/ros_ws/install/gps_distance/lib/python3.10/site-packages/gps_distance-0.0.0-py3.10.egg-info' (and everything under it)
+[1.357s] Copying ../../../build/gps_distance/gps_distance.egg-info to /home/ros/rosspaces/newboarding/Software-Team-Entrance-Task/ros_ws/install/gps_distance/lib/python3.10/site-packages/gps_distance-0.0.0-py3.10.egg-info
+[1.357s] /usr/lib/python3/dist-packages/setuptools/command/install.py:34: SetuptoolsDeprecationWarning: setup.py install is deprecated. Use build and pip and other standards-based tools.
+[1.357s]   warnings.warn(
+[1.357s] running install_scripts
+[1.440s] Installing completeSoftwareOnboarding script to /home/ros/rosspaces/newboarding/Software-Team-Entrance-Task/ros_ws/install/gps_distance/lib/gps_distance
+[1.440s] writing list of installed files to '/home/ros/rosspaces/newboarding/Software-Team-Entrance-Task/ros_ws/build/gps_distance/install.log'
+[1.523s] Invoked command in '/home/ros/rosspaces/newboarding/Software-Team-Entrance-Task/ros_ws/src/Navigation/gps_distance' returned '0': CMAKE_PREFIX_PATH=/home/ros/rosspaces/newboarding/Software-Team-Entrance-Task/ros_ws/install/interfaces:/home/ros/rosspaces/newboarding/Software-Team-Entrance-Task/ros_ws/install/launch_test:/home/ros/rosspaces/newboarding/Software-Team-Entrance-Task/ros_ws/install/launch_nav PYTHONPATH=/home/ros/rosspaces/newboarding/Software-Team-Entrance-Task/ros_ws/build/gps_distance/prefix_override:/home/ros/rosspaces/newboarding/Software-Team-Entrance-Task/ros_ws/install/gps_distance/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../../../build/gps_distance build --build-base /home/ros/rosspaces/newboarding/Software-Team-Entrance-Task/ros_ws/build/gps_distance/build install --record /home/ros/rosspaces/newboarding/Software-Team-Entrance-Task/ros_ws/build/gps_distance/install.log --single-version-externally-managed

@@ -1,0 +1,3 @@
+[console_scripts]
+completeSoftwareOnboarding = gps_distance.CompleteSoftwareOnboarding:main
+

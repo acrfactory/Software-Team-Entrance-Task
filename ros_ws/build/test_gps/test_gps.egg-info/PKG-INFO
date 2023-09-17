@@ -1,0 +1,12 @@
+Metadata-Version: 2.1
+Name: test-gps
+Version: 0.0.0
+Summary: Publishes simulated GCS coordinates and checks for arithmatic consistency
+Home-page: UNKNOWN
+Maintainer: Filip
+Maintainer-email: filipp@my.yorku.ca
+License: Copyright York University Robotics Society
+Platform: UNKNOWN
+
+UNKNOWN
+

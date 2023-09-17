@@ -1,0 +1,16 @@
+package.xml
+setup.cfg
+setup.py
+../../../build/gps_distance/gps_distance.egg-info/PKG-INFO
+../../../build/gps_distance/gps_distance.egg-info/SOURCES.txt
+../../../build/gps_distance/gps_distance.egg-info/dependency_links.txt
+../../../build/gps_distance/gps_distance.egg-info/entry_points.txt
+../../../build/gps_distance/gps_distance.egg-info/requires.txt
+../../../build/gps_distance/gps_distance.egg-info/top_level.txt
+../../../build/gps_distance/gps_distance.egg-info/zip-safe
+gps_distance/CompleteSoftwareOnboarding.py
+gps_distance/__init__.py
+resource/gps_distance
+test/test_copyright.py
+test/test_flake8.py
+test/test_pep257.py

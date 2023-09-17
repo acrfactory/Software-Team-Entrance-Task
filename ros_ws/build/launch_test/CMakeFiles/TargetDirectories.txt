@@ -1,0 +1,9 @@
+/home/ros/rosspaces/newboarding/Software-Team-Entrance-Task/ros_ws/build/launch_test/CMakeFiles/uninstall.dir
+/home/ros/rosspaces/newboarding/Software-Team-Entrance-Task/ros_ws/build/launch_test/CMakeFiles/launch_test_uninstall.dir
+/home/ros/rosspaces/newboarding/Software-Team-Entrance-Task/ros_ws/build/launch_test/CMakeFiles/test.dir
+/home/ros/rosspaces/newboarding/Software-Team-Entrance-Task/ros_ws/build/launch_test/CMakeFiles/edit_cache.dir
+/home/ros/rosspaces/newboarding/Software-Team-Entrance-Task/ros_ws/build/launch_test/CMakeFiles/rebuild_cache.dir
+/home/ros/rosspaces/newboarding/Software-Team-Entrance-Task/ros_ws/build/launch_test/CMakeFiles/list_install_components.dir
+/home/ros/rosspaces/newboarding/Software-Team-Entrance-Task/ros_ws/build/launch_test/CMakeFiles/install.dir
+/home/ros/rosspaces/newboarding/Software-Team-Entrance-Task/ros_ws/build/launch_test/CMakeFiles/install/local.dir
+/home/ros/rosspaces/newboarding/Software-Team-Entrance-Task/ros_ws/build/launch_test/CMakeFiles/install/strip.dir
