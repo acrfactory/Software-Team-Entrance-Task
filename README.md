@@ -30,9 +30,9 @@ Within the `ros_ws/src` directory, we store all of our ros packages grouped by t
   - `srv` - Contains all of the custom services that are used within our workspace.
   - `action` - Contains all of the custom actions that are used within our workspace.
 
-## Requirments
+## Requirements
 
-- must use Ros2 Humble
+- Must use Ros2 Humble
 - Must be running on an Ubuntu 22.04 environment (can be a VM or WSL)
 - The ros2 node can be created in Python or C++.
 - Node must be added to the main launch file of the navigation subsystem (does need to be run for this task).
