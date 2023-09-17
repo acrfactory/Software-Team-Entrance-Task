@@ -7,7 +7,8 @@ Make sure that you have gone through the following repository before starting th
 
 ## Task Overview
 
-The goal of this task is to create a simple ROS2 node that receives the current GPS location and calculates the distance and the heading between the current location and multiple target locations. Once these distances and headings are calculated, you must publish them to their respective topics with a custom message that meets our testing criteria.
+<!--The goal of this task is to create a simple ROS2 node that receives the current GPS location and calculates the distance and the heading between the current location and multiple target locations. Once these distances and headings are calculated, you must publish them to their respective topics with a custom message that meets our testing criteria.-->
+To effectively operate our rover in the field, it's crucial to have the ability to calculate the distance and heading to objects of interest relative to the rover. This information is valuable for many applications such as aligning radio equipment and autonomous traversal. The responsibility of acquiring and publishing this information has fallen to you. Your task is to create a ROS2 node that performs this calculation and provides real-time updates to the rover's control system. Below you will find a breakdown of the key components, requirements, and steps involved.
 
 ## Workplace Structure
 
