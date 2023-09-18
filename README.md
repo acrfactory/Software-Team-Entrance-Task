@@ -44,14 +44,13 @@ Firstly create a new ros package within the `ros_ws/src/Navigation` directory, t
 
 ### 2. Subscribing to current GPS location
 
-Your node will receive [NavSatFix]([url](https://docs.ros.org/en/noetic/api/sensor_msgs/html/msg/NavSatFix.html)) messages over the "GCS" topic, only the latitude and longitude fields are populated. You may gain some insight into the structure of the message by running ```bash ros2 topic echo "GCS"``` after the launch_test script has been launched using ```bash ros2 launch lauch_test launch.launch.py```.
+Your node will receive [NavSatFix](https://docs.ros.org/en/noetic/api/sensor_msgs/html/msg/NavSatFix.html) messages over the "GCS" topic, only the latitude and longitude fields are populated. You may gain some insight into the structure of the message by running ```bash ros2 topic echo "GCS"``` after the launch_test script has been launched using ```bash ros2 launch lauch_test launch.launch.py```.
 
-[Basic Pub/Sub]([url](https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Writing-A-Simple-Py-Publisher-And-Subscriber.html))
+[Basic Pub/Sub](https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Writing-A-Simple-Py-Publisher-And-Subscriber.html)
 
 ### 3. Calculating distance and heading
 
-The formula you will use for the arithmetic is called the [Haversine]([URL](
-https://en.wikipedia.org/wiki/Haversine_formula)) formula, this formula is used to compute the great-circle distance between two points on a sphere. You are not allowed to use an existing Python package to do this calculation for you. An important consideration for the distance calculation is that the earth is not a perfect sphere, for this task, it will be assumed that we are operating at CIRC Summer which is held in Drumheller Alberta. The radius of the earth at the operating site should be assumed to be 6365.766km. This radius is the sum of the altitude and radius for a given latitude.
+The formula you will use for the arithmetic is called the [Haversine](https://en.wikipedia.org/wiki/Haversine_formula) formula, this formula is used to compute the great-circle distance between two points on a sphere. You are not allowed to use an existing Python package to do this calculation for you. An important consideration for the distance calculation is that the earth is not a perfect sphere, for this task, it will be assumed that we are operating at CIRC Summer which is held in Drumheller Alberta. The radius of the earth at the operating site should be assumed to be 6365.766km. This radius is the sum of the altitude and radius for a given latitude.
 
 
 
@@ -60,15 +59,15 @@ https://en.wikipedia.org/wiki/Haversine_formula)) formula, this formula is used 
 Your output should be published to the “Dish” topic for every pair of GCS coordinates individually as they are received.
 The format of your custom message must meet the message specifications exactly, otherwise, your work will not be able to be checked by the check node. The message should consist of four float64 fields named as follows “latitude”, “longitude”, “distance”, and “heading”. Where the “latitude” and “longitude” are the GCS coordinate pair of the rover received on the topic “GCS”, “distance” is the distance in meters rounded to one decimal point between the received rover GCS pair and the fixed dish coordinates (51.42287924341543,-112.64106837507106). “Heading” is the heading of the dish from the rover, this heading is measured in degrees off of true north rounded to one decimal point (once you have implemented the Haversine formula for calculating distance, it should become more obvious on how heading should be computed)
 
-[Basic Pub/Sub]([url](https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Writing-A-Simple-Py-Publisher-And-Subscriber.html))
+[Basic Pub/Sub](https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Writing-A-Simple-Py-Publisher-And-Subscriber.html)
 
 <!-- Instructions for adding a custom message-->
-The custom message must be named "Completed.msg", located under `ros_ws/src/interfaces/msg`, and must follow the format described above. There are more steps involved in adding a custom message, a good tutorial can be found [here]([url](https://roboticsbackend.com/ros2-create-custom-message/)).
+The custom message must be named "Completed.msg", located under `ros_ws/src/interfaces/msg`, and must follow the format described above. There are more steps involved in adding a custom message, a good tutorial can be found [here](https://roboticsbackend.com/ros2-create-custom-message/).
 
 ### 5. Adding your node to the launch file
 <!-- as it is right now this launch file already exists-->
 
-Now that you have created the node, you must add it to the Navigation package launch file. The launch file should be named `launch.launch.py` and should be located within the `ros_ws/src/Navigation/launch` directory. There are additional steps when it comes to adding nodes to launch files other than editing the launch file itself, refer to the [official documentation]([url](https://docs.ros.org/en/humble/Tutorials/Intermediate/Launch/Creating-Launch-Files.html)).
+Now that you have created the node, you must add it to the Navigation package launch file. The launch file should be named `launch.launch.py` and should be located within the `ros_ws/src/Navigation/launch` directory. There are additional steps when it comes to adding nodes to launch files other than editing the launch file itself, refer to the [official documentation](https://docs.ros.org/en/humble/Tutorials/Intermediate/Launch/Creating-Launch-Files.html).
 ### 6. Testing
 
 In order to test your node, you must launch both your launch file and the launch_test file. These should be launched in separate terminals.
