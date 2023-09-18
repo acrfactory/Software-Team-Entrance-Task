@@ -46,9 +46,12 @@ Firstly create a new ros package within the `ros_ws/src/Navigation` directory, t
 
 Your node will receive [NavSatFix]([url](https://docs.ros.org/en/noetic/api/sensor_msgs/html/msg/NavSatFix.html)) messages over the "GCS" topic, only the latitude and longitude fields are populated. You may gain some insight into the structure of the message by running ```bash ros2 topic echo "GCS"``` after the launch_test script has been launched using ```bash ros2 launch lauch_test launch.launch.py```.
 
+[Basic Pub/Sub]([url](https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Writing-A-Simple-Py-Publisher-And-Subscriber.html))
+
 ### 3. Calculating distance and heading
 
-The formula you will use for the arithmetic is called the [Haversine]([url](https://en.wikipedia.org/wiki/Haversine_formula)) formula, this formula is used to compute the great-circle distance between two points on a sphere. You are not allowed to use an existing Python package to do this calculation for you. An important consideration for the distance calculation is that the earth is not a perfect sphere, for this task, it will be assumed that we are operating at CIRC Summer which is held in Drumheller Alberta. The radius of the earth at the operating site should be assumed to be 6365.766km. This radius is the sum of the altitude and radius for a given latitude.
+The formula you will use for the arithmetic is called the [Haversine]([URL](
+https://en.wikipedia.org/wiki/Haversine_formula)) formula, this formula is used to compute the great-circle distance between two points on a sphere. You are not allowed to use an existing Python package to do this calculation for you. An important consideration for the distance calculation is that the earth is not a perfect sphere, for this task, it will be assumed that we are operating at CIRC Summer which is held in Drumheller Alberta. The radius of the earth at the operating site should be assumed to be 6365.766km. This radius is the sum of the altitude and radius for a given latitude.
 
 
 
@@ -57,22 +60,24 @@ The formula you will use for the arithmetic is called the [Haversine]([url](http
 Your output should be published to the “Dish” topic for every pair of GCS coordinates individually as they are received.
 The format of your custom message must meet the message specifications exactly, otherwise, your work will not be able to be checked by the check node. The message should consist of four float64 fields named as follows “latitude”, “longitude”, “distance”, and “heading”. Where the “latitude” and “longitude” are the GCS coordinate pair of the rover received on the topic “GCS”, “distance” is the distance in meters rounded to one decimal point between the received rover GCS pair and the fixed dish coordinates (51.42287924341543,-112.64106837507106). “Heading” is the heading of the dish from the rover, this heading is measured in degrees off of true north rounded to one decimal point (once you have implemented the Haversine formula for calculating distance, it should become more obvious on how heading should be computed)
 
-<!-- Instructions for adding a custom message-->
+[Basic Pub/Sub]([url](https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Writing-A-Simple-Py-Publisher-And-Subscriber.html))
 
+<!-- Instructions for adding a custom message-->
+The custom message must be named "Completed.msg", located under `ros_ws/src/interfaces/msg`, and must follow the format described above. There are more steps involved in adding a custom message, a good tutorial can be found [here]([url](https://roboticsbackend.com/ros2-create-custom-message/)).
 
 ### 5. Adding your node to the launch file
 <!-- as it is right now this launch file already exists-->
 
-Now that you have created the node, you must add it to the Navigation packages launch file. The launch file should be named `nav_test.launch.py` and should be placed within the `ros_ws/src/Navigation/launch` directory. The launch file should launch the node you created for this task.
-
+Now that you have created the node, you must add it to the Navigation package launch file. The launch file should be named `launch.launch.py` and should be located within the `ros_ws/src/Navigation/launch` directory. There are additional steps when it comes to adding nodes to launch files other than editing the launch file itself, refer to the [official documentation]([url](https://docs.ros.org/en/humble/Tutorials/Intermediate/Launch/Creating-Launch-Files.html)).
 ### 6. Testing
 
 In order to test your node, you must launch both your launch file and the launch_test file. These should be launched in separate terminals.
 
 ```bash ros2 launch launch_test launch.launch.py```
+
 ```bash ros2 launch {yourlauchpackage} {yourlaunchfile}```
 
-You should receive feedback in the terminal you ran launch_test in. This feedback is limited to message issues 
+You should receive feedback in the terminal you ran launch_test in. This feedback is limited to message issues. If you are not receiving any messages from the check node in the terminal you ran launch_test in, it's likely you aren't publishing to "Dish". You may run  ```bash ros2 topic echo "Dish"``` in a separate terminal to be sure.
 
 ## Submission
 
@@ -83,6 +88,6 @@ Once you have completed the task, you must submit your solution to the task by f
 
 - A link to the forked private repo that contains your solution to the task (must be shared with @karanpreet_raja for evaluation), the repo should contain the following:
   - A ros package named `gps_distance` within the `ros_ws/src/navigation` directory
-  - A node within the `gps_distance` package that publishes the distance and heading to a custom topic. The node should also subscribe to a topic that publishes the current GPS location in the form of a NavSatFix message.
-  - Create a launch file named `nav_test.launch.py` within the `ros_ws/src/Navigation/launch` directory. <!-- specific naming optionally -->
-- A video of the output of the launch file created for this task. The video should show the output of the launch file and the terminal where the launch file was run.
+  - A node within the `gps_distance` package that subscribes to "GCS" and for each GCS coordinate pair publishes the appropriate message to the "Dish" topic.
+  - A launch file within the `ros_ws/src/Navigation/launch` directory which launches your node. <!-- specific naming optionally -->
+- A video of the output of the launch file created for this task. The video should show the terminals in which you launched the test launch file and your own.
