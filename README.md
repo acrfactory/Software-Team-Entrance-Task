@@ -12,7 +12,7 @@ To effectively operate our rover in the field, it's crucial to have the ability 
 
 ## Workplace Structure
 
-Within the `ros_ws/src` directory, we store all of our ros packages grouped by their respective subsystem. Our current setup has the following subsystems and packages:
+Within the `ros_ws/src` directory, we store all of our ros packages grouped by their respective subsystem. The workspace for this task has the following subsystems and packages:
 
 - `Navigation` - Contains all of the packages related to the localization of the rover
 
@@ -32,9 +32,9 @@ Within the `ros_ws/src` directory, we store all of our ros packages grouped by t
 
 - Must use Ros2 Humble
 - Must be running on an Ubuntu 22.04 environment (can be a VM or WSL)
-- The ros2 node can be created in Python or C++.
-- Node must be added to the main launch file of the navigation subsystem (does need to be run for this task).
-- Must use Git to fork repo (must be a private fork as your solution should not be public) and create a separate branch to work on, once you are done, you must create a pull request to the main branch on the forked repo.
+- Your ros2 node can be created in Python or C++.
+- Your node must be added to the main launch file of the navigation subsystem (although you may launch your package using ```bash ros2 run ```.
+- Must use Git to fork the repository (you must make a private fork as your solution should not be public), and create a separate branch to work on, once you are done, you must create a pull request to the main branch on the forked repository.
 
 ## Task Breakdown
 
@@ -44,26 +44,26 @@ Firstly create a new ros package within the `ros_ws/src/Navigation` directory, t
 
 ### 2. Subscribing to current GPS location
 
-Your node will receive [NavSatFix]([url](https://docs.ros.org/en/noetic/api/sensor_msgs/html/msg/NavSatFix.html)) messages over the "GCS" topic, only the latitude and longitude fields are populated. You may gain some insight into the structure of the message by running ```bash ros2 topic echo "GCS"``` after the launch_test script has been run.
+Your node will receive [NavSatFix]([url](https://docs.ros.org/en/noetic/api/sensor_msgs/html/msg/NavSatFix.html)) messages over the "GCS" topic, only the latitude and longitude fields are populated. You may gain some insight into the structure of the message by running ```bash ros2 topic echo "GCS"``` after the launch_test script has been launched using ```bash ros2 launch lauch_test launch.launch.py```.
 
 ### 3. Calculating distance and heading
 
-The formula you will use for the arithmetic is called the [haversine]([url](https://en.wikipedia.org/wiki/Haversine_formula)) formula, this formula is used to compute the great-circle distance between two points on a sphere. An important consideration for the distance calculation is that the earth is not a perfect sphere, for this task, it will be assumed that we are operating at CIRC Summer which is held in Drumheller Alberta. The radius of the earth at the operating site should be assumed to be 6365.766km. This radius is the sum of the altitude and radius for a given latitude.
+The formula you will use for the arithmetic is called the [Haversine]([url](https://en.wikipedia.org/wiki/Haversine_formula)) formula, this formula is used to compute the great-circle distance between two points on a sphere. You are not allowed to use an existing Python package to do this calculation for you. An important consideration for the distance calculation is that the earth is not a perfect sphere, for this task, it will be assumed that we are operating at CIRC Summer which is held in Drumheller Alberta. The radius of the earth at the operating site should be assumed to be 6365.766km. This radius is the sum of the altitude and radius for a given latitude.
 
 
 
 ### 4. Publishing distance and heading (with custom message)
 
 Your output should be published to the “Dish” topic for every pair of GCS coordinates individually as they are received.
-The format of your custom message must meet the message specifications exactly, otherwise, your work will not be able to be checked by the check node. The message should consist of four float64 fields named as follows “latitude”, “longitude”, “distance”, and “heading”. Where the “latitude” and “longitude” are the GCS coordinate pair received on the topic “GCS”, “distance” being the distance in meters rounded to one decimal point between the received rover GCS pair and the fixed dish coordinates (51.42287924341543,-112.64106837507106). “Heading” is the heading of the dish from the rover, this heading is measured in degrees off of true north rounded to one decimal point.
+The format of your custom message must meet the message specifications exactly, otherwise, your work will not be able to be checked by the check node. The message should consist of four float64 fields named as follows “latitude”, “longitude”, “distance”, and “heading”. Where the “latitude” and “longitude” are the GCS coordinate pair of the rover received on the topic “GCS”, “distance” is the distance in meters rounded to one decimal point between the received rover GCS pair and the fixed dish coordinates (51.42287924341543,-112.64106837507106). “Heading” is the heading of the dish from the rover, this heading is measured in degrees off of true north rounded to one decimal point (once you have implemented the Haversine formula for calculating distance, it should become more obvious on how heading should be computed)
 
 <!-- Instructions for adding a custom message-->
 
 
-### 5. Creating a launch file
+### 5. Adding your node to the launch file
 <!-- as it is right now this launch file already exists-->
 
-Now that you have created the node, you must create a launch file that will launch the node. The launch file should be named `nav_test.launch.py` and should be placed within the `ros_ws/src/Navigation/launch` directory. The launch file should launch the node you created for this task.
+Now that you have created the node, you must add it to the Navigation packages launch file. The launch file should be named `nav_test.launch.py` and should be placed within the `ros_ws/src/Navigation/launch` directory. The launch file should launch the node you created for this task.
 
 ### 6. Testing
 
