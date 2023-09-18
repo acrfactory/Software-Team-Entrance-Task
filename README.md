@@ -7,8 +7,8 @@ Make sure that you have gone through the following repository before starting th
 
 ## Task Overview
 
-<!--The goal of this task is to create a simple ROS2 node that receives the current GPS location and calculates the distance and the heading between the current location and multiple target locations. Once these distances and headings are calculated, you must publish them to their respective topics with a custom message that meets our testing criteria.-->
-To effectively operate our rover in the field, it's crucial to have the ability to calculate the distance and heading to objects of interest relative to the rover. This information is valuable for many applications such as aligning radio equipment and autonomous traversal. The responsibility of acquiring and publishing this information has fallen to you. Your task is to create a ROS2 node that performs this calculation and provides real-time updates to the rover's control system. Below you will find a breakdown of the key components, requirements, and steps involved.
+<!--This task aims to create a simple ROS2 node that receives the current GPS location and calculates the distance and heading between the current location and multiple target locations. Once these distances and headings are calculated, you must publish them to their respective topics with a custom message that meets our testing criteria.-->
+To effectively operate our rover in the field, it's crucial to have the ability to calculate the distance and heading to objects of interest relative to the rover. This information is valuable for many applications such as aligning radio equipment and autonomous traversal. The responsibility of acquiring and publishing this information has fallen to you. Your task is to create a ROS2 node that performs this calculation and provides real-time updates to the rover's control system. Below you will find a breakdown of the critical components, requirements, and steps involved.
 
 ## Workplace Structure
 
@@ -34,13 +34,13 @@ Within the `ros_ws/src` directory, we store all of our ros packages grouped by t
 - Must be running on an Ubuntu 22.04 environment (can be a VM or WSL)
 - The ros2 node can be created in Python or C++.
 - Node must be added to the main launch file of the navigation subsystem (does need to be run for this task).
-- Must use Git in order to fork repo (must be a private fork as your solution should not be public) and create a separate branch to work on, once you are done, you must create a pull request to the main branch on the forked repo.
+- Must use Git to fork repo (must be a private fork as your solution should not be public) and create a separate branch to work on, once you are done, you must create a pull request to the main branch on the forked repo.
 
 ## Task Breakdown
 
 ### 1. Creating a ros package
 
-The first step you must take is to create a new ros package within the `ros_ws/src/navigation` directory where all packages related to navigation are housed. This package should be named `gps_distance`.
+Firstly create a new ros package within the `ros_ws/src/Navigation` directory, this package should be named `gps_distance`.
 
 ### 2. Subscribing to current GPS location
 
