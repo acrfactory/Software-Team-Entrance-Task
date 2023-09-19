@@ -33,7 +33,7 @@ Within the `ros_ws/src` directory, we store all of our ros packages grouped by t
 - Must use Ros2 Humble
 - Must be running on an Ubuntu 22.04 environment (can be a VM or WSL)
 - Your ros2 node can be created in Python or C++.
-- Your node must be added to the main launch file of the navigation subsystem (although you may launch your package using ```bash ros2 run ```.
+- Your node must be added to the main launch file of the navigation subsystem (although you may launch your package using ```bash ros2 run```.
 - Must use Git to fork the repository (you must make a private fork as your solution should not be public), and create a separate branch to work on, once you are done, you must create a pull request to the main branch on the forked repository.
 
 ## Task Breakdown
