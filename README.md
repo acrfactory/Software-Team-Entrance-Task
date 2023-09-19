@@ -30,6 +30,7 @@ Within the `ros_ws/src` directory, we store all of our ros packages grouped by t
 
 ## Requirements
 
+- Do not build your package using symlink, if you do so the package will not build properly. If you do accidentally build using symlink, you can fix your build by deleting the build,install, and log files and rebuilding without symlink
 - Must use Ros2 Humble
 - Must be running on an Ubuntu 22.04 environment (can be a VM or WSL)
 - Your ros2 node can be created in Python or C++.
