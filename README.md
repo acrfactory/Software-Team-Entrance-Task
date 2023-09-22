@@ -53,6 +53,9 @@ Your node will receive [NavSatFix](https://docs.ros.org/en/noetic/api/sensor_msg
 
 The formula you will use for the arithmetic is called the [Haversine](https://en.wikipedia.org/wiki/Haversine_formula) formula, this formula is used to compute the great-circle distance between two points on a sphere. You are not allowed to use an existing Python package to do this calculation for you. An important consideration for the distance calculation is that the earth is not a perfect sphere, for this task, it will be assumed that we are operating at CIRC Summer which is held in Drumheller Alberta. The radius of the earth at the operating site should be assumed to be 6365.766km. This radius is the sum of the altitude and radius for a given latitude.
 
+#### Key constants
+  - Dish 51.42287924341543,-112.64106837507106
+  - Radius 6365.766km
 
 
 ### 4. Publishing distance and heading (with custom message)
