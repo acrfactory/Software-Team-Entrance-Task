@@ -8,6 +8,7 @@ Make sure that you have gone through the following repository before starting th
 ## Task Overview
 
 <!--This task aims to create a simple ROS2 node that receives the current GPS location and calculates the distance and heading between the current location and multiple target locations. Once these distances and headings are calculated, you must publish them to their respective topics with a custom message that meets our testing criteria.-->
+
 To effectively operate our rover in the field, it's crucial to have the ability to calculate the distance and heading to objects of interest relative to the rover. This information is valuable for many applications such as aligning radio equipment and autonomous traversal. The responsibility of acquiring and publishing this information has fallen to you. Your task is to create a ROS2 node that performs this calculation and provides real-time updates to the rover's control system on the location of a communications dish based on the recieved position of the rover. Below you will find a breakdown of the critical components, requirements, and steps involved.
 
 ## Workplace Structure
@@ -34,7 +35,7 @@ Within the `ros_ws/src` directory, we store all of our ros packages grouped by t
 - Must use Ros2 Humble
 - Must be running on an Ubuntu 22.04 environment (can be a VM or WSL)
 - Your ros2 node can be created in Python or C++.
-- Your node must be added to the main launch file of the navigation subsystem (although you may launch your package using ```bash ros2 run```.
+- Your node must be added to the main launch file of the navigation subsystem (although you may launch your package using `bash ros2 run`.
 - Must use Git to fork the repository (you must make a private fork as your solution should not be public), and create a separate branch to work on, once you are done, you must create a pull request to the main branch on the forked repository.
 
 ## Task Breakdown
@@ -45,18 +46,37 @@ Firstly create a new ros package within the `ros_ws/src/Navigation` directory, t
 
 ### 2. Subscribing to current GPS location
 
-Your node will receive [NavSatFix](https://docs.ros.org/en/noetic/api/sensor_msgs/html/msg/NavSatFix.html) messages over the "GCS" topic, only the latitude and longitude fields are populated. You may gain some insight into the structure of the message by running ```bash ros2 topic echo "GCS"``` after the launch_test script has been launched using ```bash ros2 launch lauch_test launch.launch.py```.
+Your node will receive [NavSatFix](https://docs.ros.org/en/noetic/api/sensor_msgs/html/msg/NavSatFix.html) messages over the "GCS" topic, only the latitude and longitude fields are populated. You may gain some insight into the structure of the message by running `bash ros2 topic echo "GCS"` after the launch_test script has been launched using `bash ros2 launch lauch_test launch.launch.py`.
 
 [Basic Pub/Sub](https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Writing-A-Simple-Py-Publisher-And-Subscriber.html)
 
 ### 3. Calculating distance and heading
 
-The formula you will use for the arithmetic is called the [Haversine](https://en.wikipedia.org/wiki/Haversine_formula) formula, this formula is used to compute the great-circle distance between two points on a sphere. You are not allowed to use an existing Python package to do this calculation for you. An important consideration for the distance calculation is that the earth is not a perfect sphere, for this task, it will be assumed that we are operating at CIRC Summer which is held in Drumheller Alberta. The radius of the earth at the operating site should be assumed to be 6365.766km. This radius is the sum of the altitude and radius for a given latitude.
+The formula you will use for the arithmetic is called the [Haversine](https://en.wikipedia.org/wiki/Haversine_formula) formula for distance, this formula is used to compute the great-circle distance between two points on a sphere. You are not allowed to use an existing Python package to do this calculation for you. An important consideration for the distance calculation is that the earth is not a perfect sphere, for this task, it will be assumed that we are operating at CIRC Summer which is held in Drumheller Alberta. The radius of the earth at the operating site should be assumed to be 6365.766km. This radius is the sum of the altitude and radius for a given latitude. Additionally, in order to calculate the heading you may use the following function and add it to your code:
+
+```python
+def get_heading(longitude, latitude):
+  lat1 = radians(longitude)
+  lon1 = radians(latitude)
+  lat2 = radians(43.78522077857844)
+  lon2 = radians(-79.50167502538869)
+
+  delta_lat = lat2 - lat1
+  delta_lon = lon2 - lon1
+
+  y = sin(delta_lon) * cos(lat2)
+  x = cos(lat1) * sin(lat2) - sin(lat1) * cos(lat2) * cos(delta_lon)
+  bearing = atan2(y, x)
+  bearing = degrees(bearing)
+  bearing = (bearing + 360) % 360
+  heading = round(bearing, 1)
+  return heading
+```
 
 #### Key constants
-  - Dish 51.42287924341543,-112.64106837507106
-  - Radius 6365.766km
 
+- Dish 51.42287924341543,-112.64106837507106
+- Radius 6365.766km
 
 ### 4. Publishing distance and heading (with custom message)
 
@@ -66,21 +86,24 @@ The format of your custom message must meet the message specifications exactly, 
 [Basic Pub/Sub](https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Writing-A-Simple-Py-Publisher-And-Subscriber.html)
 
 <!-- Instructions for adding a custom message-->
+
 The custom message must be named "Completed.msg", located under `ros_ws/src/interfaces/msg`, and must follow the format described above. There are more steps involved in adding a custom message, a good tutorial can be found [here](https://roboticsbackend.com/ros2-create-custom-message/).
 
 ### 5. Adding your node to the launch file
+
 <!-- as it is right now this launch file already exists-->
 
 Now that you have created the node, you must add it to the Navigation package launch file. The launch file should be named `launch.launch.py` and should be located within the `ros_ws/src/Navigation/launch` directory. There are additional steps when it comes to adding nodes to launch files other than editing the launch file itself, refer to the [official documentation](https://docs.ros.org/en/humble/Tutorials/Intermediate/Launch/Creating-Launch-Files.html).
+
 ### 6. Testing
 
 In order to test your node, you must launch both your launch file and the launch_test file. These should be launched in separate terminals.
 
-```bash ros2 launch launch_test launch.launch.py```
+`bash ros2 launch launch_test launch.launch.py`
 
-```bash ros2 launch {yourlauchpackage} {yourlaunchfile}```
+`bash ros2 launch {yourlauchpackage} {yourlaunchfile}`
 
-You should receive feedback in the terminal you ran launch_test in. This feedback is limited to message issues. If you are not receiving any messages from the check node in the terminal you ran launch_test in, it's likely you aren't publishing to "Dish". You may run  ```bash ros2 topic echo "Dish"``` in a separate terminal to be sure.
+You should receive feedback in the terminal you ran launch_test in. This feedback is limited to message issues. If you are not receiving any messages from the check node in the terminal you ran launch_test in, it's likely you aren't publishing to "Dish". You may run `bash ros2 topic echo "Dish"` in a separate terminal to be sure.
 
 ## Submission
 
