@@ -1,18 +1,16 @@
 # Software-Team-Entrance-Task
 
-## Pre-requisites
+## Introduction
 
-Make sure that you have gone through the following repository before starting this task:
-[Software Dev guide](https://github.com/YorkURobotics/yurs-rover-software-dev-guide)
+This task aims to create a simple ROS2 node that receives the current GPS location and calculates the distance and heading between the current location and multiple target locations. Once these distances and headings are calculated, you must publish them to their respective topics with a custom message that meets our testing criteria.
 
 ## Task Overview
 
-<!--The goal of this task is to create a simple ROS2 node that receives the current GPS location and calculates the distance and the heading between the current location and multiple target locations. Once these distances and headings are calculated, you must publish them to their respective topics with a custom message that meets our testing criteria.-->
-To effectively operate our rover in the field, it's crucial to have the ability to calculate the distance and heading to objects of interest relative to the rover. This information is valuable for many applications such as aligning radio equipment and autonomous traversal. The responsibility of acquiring and publishing this information has fallen to you. Your task is to create a ROS2 node that performs this calculation and provides real-time updates to the rover's control system. Below you will find a breakdown of the key components, requirements, and steps involved.
+To effectively operate our rover in the field, it's crucial to have the ability to calculate the distance and heading to objects of interest relative to the rover. This information is valuable for many applications such as aligning radio equipment and autonomous traversal. The responsibility of acquiring and publishing this information has fallen to you. Your task is to create a ROS2 node that performs this calculation and provides real-time updates to the rover's control system on the location of a communications dish based on the recieved position of the rover. Below you will find a breakdown of the critical components, requirements, and steps involved.
 
 ## Workplace Structure
 
-Within the `ros_ws/src` directory, we store all of our ros packages grouped by their respective subsystem. Our current setup has the following subsystems and packages:
+Within the `ros_ws/src` directory, we store all of our ros packages grouped by their respective subsystem. The workspace for this task has the following subsystems and packages:
 
 - `Navigation` - Contains all of the packages related to the localization of the rover
 
@@ -27,78 +25,92 @@ Within the `ros_ws/src` directory, we store all of our ros packages grouped by t
 
 - `interfaces` - Contains all of the custom messages, services, and actions that are used within our workspace.
   - `msg` - Contains all of the custom messages that are used within our workspace.
-  - `srv` - Contains all of the custom services that are used within our workspace.
-  - `action` - Contains all of the custom actions that are used within our workspace.
 
 ## Requirements
 
+- Do not build your package using symlink, if you do so the package will not build properly. If you do accidentally build using symlink, you can fix your build by deleting the build,install, and log files and rebuilding without symlink
 - Must use Ros2 Humble
 - Must be running on an Ubuntu 22.04 environment (can be a VM or WSL)
-- The ros2 node can be created in Python or C++.
-- Node must be added to the main launch file of the navigation subsystem (does need to be run for this task).
-- You need to make a launch file within the `ros_ws/src/testing/launch_test/launch` directory. The launch file should be named `nav_test.launch.py`. The launch file should launch the `test_gps` node and the node created for this task.
-- The node created for this task should publish the distance and heading to a custom topic. The node should also subscribe to a topic that publishes the current GPS location in the form of a NavSatFix message.
-- Must use Git in order to fork repo (must be a private fork as your solution should not be public) and create a separate branch to work on, once you are done, you must create a pull request to the main branch on the forked repo.
+- Your ros2 node can be created in Python or C++.
+- Your node must be added to the main launch file of the navigation subsystem (although you may launch your package using `bash ros2 run`.
+- Must use Git to fork the repository (you must make a private fork as your solution should not be public), and create a separate branch to work on, once you are done, you must create a pull request to the main branch on the forked repository.
 
 ## Task Breakdown
 
 ### 1. Creating a ros package
 
-The first step you must take is to create a new ros package within the `ros_ws/src/navigation` directory where all packages related to navigation are housed. This package should be named `gps_distance`.
+Firstly create a new ros package within the `ros_ws/src/Navigation` directory, this package should be named `gps_distance`.
 
 ### 2. Subscribing to current GPS location
 
-The node should publish the distance and heading to a custom topic. The node should also subscribe to the `/current_gps` topic that publishes the current GPS location in the form of a [`NavSatFix` message](https://docs.ros.org/en/noetic/api/sensor_msgs/html/msg/NavSatFix.html).
+Your node will receive [NavSatFix](https://docs.ros.org/en/noetic/api/sensor_msgs/html/msg/NavSatFix.html) messages over the "GCS" topic, only the latitude and longitude fields are populated. You may gain some insight into the structure of the message by running `bash ros2 topic echo "GCS"` after the launch_test script has been launched using `bash ros2 launch lauch_test launch.launch.py`.
+
+[Basic Pub/Sub](https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Writing-A-Simple-Py-Publisher-And-Subscriber.html)
 
 ### 3. Calculating distance and heading
 
-The ros parameters indicate the ID of the target locations that the rover must travel to. Once the ID of the target location is known, the node can use the following formula to calculate the distance and heading between the current location and the target location:
+The formula you will use for the arithmetic is called the [Haversine](https://en.wikipedia.org/wiki/Haversine_formula) formula for distance, this formula is used to compute the great-circle distance between two points on a sphere. You are not allowed to use an existing Python package to do this calculation for you. An important consideration for the distance calculation is that the earth is not a perfect sphere, for this task, it will be assumed that we are operating at CIRC Summer which is held in Drumheller Alberta. The radius of the earth at the operating site should be assumed to be 6365.766km. This radius is the sum of the altitude and radius for a given latitude. Additionally, in order to calculate the heading you may use the following function and add it to your code:
 
-![Distance and Heading Formula](
+```python
+def get_heading(longitude, latitude):
+  lat1 = radians(longitude)
+  lon1 = radians(latitude)
+  lat2 = radians(43.78522077857844)
+  lon2 = radians(-79.50167502538869)
 
-)
+  delta_lat = lat2 - lat1
+  delta_lon = lon2 - lon1
 
-**Note:** The heading should be relative to true north in a clockwise direction in degrees and the distance should be in meters.
+  y = sin(delta_lon) * cos(lat2)
+  x = cos(lat1) * sin(lat2) - sin(lat1) * cos(lat2) * cos(delta_lon)
+  bearing = atan2(y, x)
+  bearing = degrees(bearing)
+  bearing = (bearing + 360) % 360
+  heading = round(bearing, 1)
+  return heading
+```
+
+#### Key constants
+
+- Dish 51.42287924341543,-112.64106837507106
+- Radius 6365.766km
 
 ### 4. Publishing distance and heading (with custom message)
 
-You must publish the distance and heading to a custom topic with a custom message. The custom message must have the following fields:
+Your output should be published to the “Dish” topic for every pair of GCS coordinates individually as they are received.
+The format of your custom message must meet the message specifications exactly, otherwise, your work will not be able to be checked by the check node. The message should consist of four float64 fields named as follows “latitude”, “longitude”, “distance”, and “heading”. Where the “latitude” and “longitude” are the GCS coordinate pair of the rover received on the topic “GCS”, “distance” is the distance in meters rounded to one decimal point between the received rover GCS pair and the fixed dish coordinates (51.42287924341543,-112.64106837507106). “Heading” is the heading of the dish from the rover, this heading is measured in degrees off of true north rounded to one decimal point (once you have implemented the Haversine formula for calculating distance, it should become more obvious on how heading should be computed)
 
-- an integer (unsigned of size 8 bits) with the variable name `id` representing the id of the target location
-- a float (signed of size 32 bits) with the variable name `distance` representing the distance between the current location and the target location in meters
-- a float (unsigned of size 32 bits) with the variable name `heading` representing the heading between the current location and the target location in degrees relative to true north in a clockwise direction
+[Basic Pub/Sub](https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Writing-A-Simple-Py-Publisher-And-Subscriber.html)
 
-### 5. Creating a launch file
+<!-- Instructions for adding a custom message-->
 
-Now that you have created the node, you must create a launch file that will launch the node. The launch file should be named `nav_test.launch.py` and should be placed within the `ros_ws/src/testing/launch_test/launch` directory. The launch file should launch the `test_gps` node and the node created for this task.
+The custom message must be named "Completed.msg", located under `ros_ws/src/interfaces/msg`, and must follow the format described above. There are more steps involved in adding a custom message, a good tutorial can be found [here](https://roboticsbackend.com/ros2-create-custom-message/).
 
-The parameters for the `test_gps` node should be the last 3 digits of your student number. For example, if your student number is 123456789, the parameters should be 789, which means that the three location ids that the rover must travel to are 7, 8, and 9.
+### 5. Adding your node to the launch file
 
-Launching this launch file should result in output that looks like the following:
+<!-- as it is right now this launch file already exists-->
 
-```bash
-[INFO] [launch]: All log files can be found below /home/rover/.ros/log/2021-09-30-16-00-00-000000-rover-0
-[INFO] [launch]: Default logging verbosity is set to INFO
-[INFO] [test_gps-1]: process started with pid [42069]
-[INFO] [gps_distance-2]: process started with pid [69420]
-[INFO] [test_gps-1]: Publishing current GPS location: 43.945, -78.895
-[INFO] [test_gps-1]: Received CORRECT distance and heading to target location 7: 100.0m, 45.0 degrees
-[INFO] [test_gps-1]: Received CORRECT distance and heading to target location 8: 200.0m, 90.0 degrees
-[INFO] [test_gps-1]: Received INCORRECT distance and heading to target location 9: 300.0m, 135.0 degrees
-```
+Now that you have created the node, you must add it to the Navigation package launch file. The launch file should be named `launch.launch.py` and should be located within the `ros_ws/src/Navigation/launch` directory. There are additional steps when it comes to adding nodes to launch files other than editing the launch file itself, refer to the [official documentation](https://docs.ros.org/en/humble/Tutorials/Intermediate/Launch/Creating-Launch-Files.html).
 
-If all of the Logs are correct, then you have completed the task. If not, then you must go back and fix the errors.
+### 6. Testing
+
+In order to test your node, you must launch both your launch file and the launch_test file. These should be launched in separate terminals.
+
+`bash ros2 launch launch_test launch.launch.py`
+
+`bash ros2 launch {yourlauchpackage} {yourlaunchfile}`
+
+You should receive feedback in the terminal you ran launch_test in. This feedback is limited to message issues. If you are not receiving any messages from the check node in the terminal you ran launch_test in, it's likely you aren't publishing to "Dish". You may run `bash ros2 topic echo "Dish"` in a separate terminal to be sure.
 
 ## Submission
 
 Once you have completed the task, you must submit your solution to the task by filling out the following form:
-[YURS Software Entrance Task Submission](https://forms.gle/)
+[YURS Software Entrance Task Submission](https://forms.gle/Haa34G6QinaqzdEi7)
 
 ### Deliverables
 
 - A link to the forked private repo that contains your solution to the task (must be shared with @karanpreet_raja for evaluation), the repo should contain the following:
   - A ros package named `gps_distance` within the `ros_ws/src/navigation` directory
-  - A node within the `gps_distance` package that publishes the distance and heading to a custom topic. The node should also subscribe to a topic that publishes the current GPS location in the form of a NavSatFix message.
-  - Create a launch file named `nav_test.launch.py` within the `ros_ws/src/testing/launch_test/launch` directory. The launch file should launch the `test_gps` node and the node created for this task.
-  - Add the node created for this task to the main launch file of the navigation subsystem which is located at `ros_ws/src/navigation/launch_nav/launch/navigation.launch.py` (does need to be run for this task).
-- A video of the output of the launch file created for this task. The video should show the output of the launch file and the terminal where the launch file was run.
+  - A node within the `gps_distance` package that subscribes to "GCS" and for each GCS coordinate pair publishes the appropriate message to the "Dish" topic.
+  - A launch file within the `ros_ws/src/Navigation/launch` directory which launches your node. <!-- specific naming optionally -->
+- A video of the output of the launch file created for this task. The video should show the terminals in which you launched the test launch file and your own.
