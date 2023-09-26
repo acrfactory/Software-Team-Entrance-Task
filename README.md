@@ -33,7 +33,7 @@ Within the `ros_ws/src` directory, we store all of our ros packages grouped by t
 - Must be running on an Ubuntu 22.04 environment (can be a VM or WSL)
 - Your ros2 node can be created in Python or C++.
 - Your node must be added to the main launch file of the navigation subsystem (although you may launch your package using `bash ros2 run`.
-- Must use Git to fork the repository (you must make a private fork as your solution should not be public), and create a separate branch to work on, once you are done, you must create a pull request to the main branch on the forked repository.
+- Must use Git to clone the repository (you must make a local clone as your solution should not be public), and use commits to orgnize and label your changes. At the end you should zip the directory (turning it into a compressed file) and submit it to the google fourms submission link below.
 
 ## Task Breakdown
 
@@ -109,8 +109,8 @@ Once you have completed the task, you must submit your solution to the task by f
 
 ### Deliverables
 
-- A link to the forked private repo that contains your solution to the task (must be shared with @karanpreet_raja for evaluation), the repo should contain the following:
+- A link to a zip file (compressed file) that contains the repository holding your solution to the task (must have your changes orginized as commits), the repo should contain the following:
   - A ros package named `gps_distance` within the `ros_ws/src/navigation` directory
   - A node within the `gps_distance` package that subscribes to "GCS" and for each GCS coordinate pair publishes the appropriate message to the "Dish" topic.
   - A launch file within the `ros_ws/src/Navigation/launch` directory which launches your node. <!-- specific naming optionally -->
-- A video of the output of the launch file created for this task. The video should show the terminals in which you launched the test launch file and your own.
+- A like to a video of the output of the launch file created for this task. The video should show the terminals in which you launched the test launch file and your own.
