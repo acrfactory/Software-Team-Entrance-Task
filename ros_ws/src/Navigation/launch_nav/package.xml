@@ -12,8 +12,11 @@
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>
   
+  <depend>interfaces</depend>
+  
   <!-- The depenancy for gps_distance has already been taken care of for you-->
   <exec_depend>gps_distance</exec_depend>
+
 
   <export>
     <build_type>ament_cmake</build_type>
